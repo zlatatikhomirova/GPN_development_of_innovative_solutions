@@ -1,79 +1,67 @@
 # GPN Intelligence Cup 2024. Data Scientist в разработке инновационных решений
 
-
-
-![medusa-discord-integration](https://user-images.githubusercontent.com/67496096/193741801-e112fc58-dbe2-4321-9320-513216e08077.png)
-
 # О задаче
-В очень сказачной манере предстояло
+В очень сказочной манере предстояло решить задачу регрессии по предсказанию Гармонии бессмертия.
+* Таргет: Гармония Бессмертия
+ * суть: показатель изношенности портала, если портал изношен, портал может разрушиться и от этого многим будет плохо
 
-## Description
+## Задача:
+спрогнозировать состояние портала, чтобы успеть предотвратить его разрушение
 
-Discord is one of the best communication platforms for organizations. Medusa is a leading open-source eCommerce platform. Combining both of them to send Order Notification from Medusa to Discord server using the webhook.  
-I have implemented Discord as the notification provider with the event `order.placed`.
+Для построения модели у нас есть несколько предикторов.
 
-## Preview
+## Предикторы
 
-When the order placed from the Medusa's storefront. A message will be send to the Discord Server using the WebHook.
+* Вектор мощи
+* Скорость перехода через портал
+* Приток силы потока
+* Ритм магического ядра
+* Поток энергий
+* Сила левого потока
+* Сила правого потока
+* Пламя стихий
+* Температура вдоха истока
+* Температура выдоха истока
+* Приток давления выдоха истока
+* Давление вдоха истока
+* Давление выдоха истока
+* Древний ветер
+* Печать чародея
+* Эмульсия истока
+* Дыхание истока
 
-*Order placed on Medusa*
-![image](https://user-images.githubusercontent.com/67496096/193768273-123167ce-9946-46b9-85b2-af1ee6178620.png)
+## Рекомендации по обработке данных
+1. Мультиколлинеарность посмотреть
+2. Взаимосвязи между признаками поискать
+3. При необходимости, создать новые фичи, на основе имеющихся.
+4. Признак значим? Может, уберем что-то? Авось лучше станет!
 
-*Message in Discord Server*
+## Дополнительные рекомендации по работе с данными
 
-![image](https://user-images.githubusercontent.com/67496096/195573733-85d54eb0-85c0-4c28-b51e-acb2b07395f8.png)
+1. Общая мощность потоков = сила левого потока + сила правого потока
+2. df = df[Общая мощность потоков, сила левого потока, сила правого потока, приток силы потока]
+По идее, общая мощность потоков - сколько магической силы прохолит в единицу времени (минуту)?
+3. Общая сила ядра = Ритм магического ядра * Приток силы потока
+4. Общее давление на выходе = Приток давления выхода истока + Давление выхода истока
+5. Магическая производительность = скорость перехода через портал / эмульсия истока
+6. Эффективность ядра = общая сила ядра / эмульсия истока
+7. Магическая мощность = эмульсия истока * общее давление * (пламя стихий - температура вдоха истока)
+8. Степень износа магических источников = Дыхание истока / Гармония Бессмертия
+9. Расхождения в стабильности магии = abs(Дыхание истока - Гармония Бессмертия)
+10. Баланс угасания = ( Дыхание истока - Гармония Бессмертия) / Скорость перехода через портал
 
-# Setup Project
 
-## Prerequisites
+# Как это должно выглядеть:
+IPython Notebook <- EDA + модель
+1. Работа логично структурирована.
+2. Есть логичные заголовки.
+3. Каждый значимый график имеет пояснение.
+4. Аргументировать построение моделей.
+5. Объяснить ход мыслей при выборе методов, основываясь на метриках ошибки.
+6. Выбрать модель с наименьшей ошибкой по выбранной метрике.
+7. Подвести итоги, отразив ключевые выводы и результаты.
 
-We need to install or make sure that these tools are pre-installed on your machine:
+# Результаты и выводы
+Предикторы сильно коррелированы. Есть предикторы, которые связаны друг с другом разными тимпами связи. И эти связи можно кластеризовать по значениям Вектора Мощи, который, в свою очередь, имеет однозначное значение скорости перехода через портал. Для обработки мультиколлинеарности использовали самый простой метод - PCA. Было бы интересно поподбирать обратные функции для обработки нелинейных зависимостей и попробовать другие методы кластеризации, а также сделать график для интерпретации компонент, как в R (мы сделали heatmap). 
 
-- [NodeJS](https://nodejs.org/en/download/): It is a JavaScript runtime build. 
-- [Git](https://git-scm.com/downloads): It is an open source version control system. 
-- [Medusa CLI](https://docs.medusajs.com/quickstart/quick-start): It will be used while running the medusa server on the local machine.
-- [Discord Webhook](https://www.youtube.com/watch?v=fKksxz2Gdnc): Setup a webhook integration on your discord server.
-- [Redis](https://docs.medusajs.com/tutorial/set-up-your-development-environment): Redis is an in-memory data structure store and message broker.
-
-## Install Project
-
-1. Clone the Repository
-
-```bash
-git clone https://github.com/surajondev/medusa-discord-integration.git
-```
-
-2. Install packages in the `/backend/` and `/storefront/` directory
-
-```
-npm install
-```
-
-3. In the `/backend` create a `.env` file add the discord webhook URL
-
-```bash
-DISCORD_WEBHOOK_URL="WEBHOOK URL"
-```
-
-4. Run the server, storefront and the redis server.
-
-For server from `/backend/`:
-```bash
-npm run start
-```
-
-For storefront from `/storefront/`
-```bash
-npm run dev
-```
-
-For Redis:
-```bash
-sudo service redis-server start
-```
-
-# Resources
-
-- [Medusa’s GitHub repository](https://github.com/medusajs/medusa)
-- [Medusa's Documentation](https://docs.medusajs.com/)
-- [Discord Webhook](https://discord.com/developers/docs/resources/webhook)
+В итоге получилось, что лучше всех отбработала модель ligthGBM, что вполне ожидаемо, ввиду особенностей реализации этой модели (и самого алгоритма, конечно же). Метрики для неё были наилучшими, в сравнении с метриками для других моделей (и визуальный тест совпадения предсказанных и реальных данных тоже).
